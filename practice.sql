@@ -24,3 +24,40 @@ where contact_phone like '%777%'
 
 select * from student_grades
 where email like 'r%'
+
+
+--Завдання 2
+--Створіть наступні запити для бази даних з оцінками cтудентів із попереднього практичного завдання:
+--■ Показати мінімальну середню оцінку по всіх студентах.
+--Показати максимальну середню оцінку по всіх студентах.
+--■ Показати статистику міст. Має відображатися назва міста та кількість студентів з цього міста.
+--■ Показати статистику студентів. Має відображатися назва країни та кількість студентів з цієї країни.
+--■ Показати кількість студентів з мінімальною середньою оцінкою з математики.
+--■ Показати кількість студентів з максимальною середньою оцінкою з математики.
+--■ Показати кількість студентів у кожній групі.
+--■ Показати середню оцінку групи.
+
+select min(average_grade_per_year) from student_grades
+
+select max(average_grade_per_year) from student_grades
+
+select city, count(*) as student_count from student_grades
+group by city;
+
+select country, count(*) as student_count from student_grades
+group by country;
+
+select count(*) from student_grades
+where average_grade_per_year = (select min(average_grade_per_year) from student_grades) 
+and min_subject_name = 'mathematics'
+
+select count(*) from student_grades
+where average_grade_per_year = (select max(average_grade_per_year) from student_grades) 
+and min_subject_name = 'mathematics'
+
+
+select group_name, count(*) as student_count from student_grades
+group by group_name;
+
+select group_name, avg(average_grade_per_year) as group_average from student_grades
+group by group_name;
